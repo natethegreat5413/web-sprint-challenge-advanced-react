@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import {useForm} from '../hooks/useForm'
-
+import useForm from '../hooks/useForm'
 const initialValue = {
   firstName: "",
   lastName: "",
@@ -16,7 +15,7 @@ const initialValue = {
 
 const CheckoutForm = (props) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [values, handleChanges] = useState(initialValue);
+  const [handleChanges, values] = useForm(initialValue);
 
   
 
@@ -32,7 +31,6 @@ const CheckoutForm = (props) => {
         <label>
           First Name:
           <input
-            id="firstName"
             name="firstName"
             value={values.firstName}
             onChange={handleChanges}
@@ -41,7 +39,6 @@ const CheckoutForm = (props) => {
         <label>
           Last Name:
           <input
-            id="lastName"
             name="lastName"
             value={values.lastName}
             onChange={handleChanges}
@@ -50,7 +47,6 @@ const CheckoutForm = (props) => {
         <label>
           Address:
           <input
-            id="address"
             name="address"
             value={values.address}
             onChange={handleChanges}
@@ -58,17 +54,17 @@ const CheckoutForm = (props) => {
         </label>
         <label>
           City:
-          <input id="city" name="city" value={values.city} onChange={handleChanges} />
+          <input name="city" value={values.city} onChange={handleChanges} />
         </label>
         <label>
           State:
-          <input id="state" name="state" value={values.state} onChange={handleChanges} />
+          <input name="state" value={values.state} onChange={handleChanges} />
         </label>
         <label>
           Zip:
-          <input id="zip" name="zip" value={values.zip} onChange={handleChanges} />
+          <input name="zip" value={values.zip} onChange={handleChanges} />
         </label>
-        <button data-testid="checkout">Checkout</button>
+        <button data-testid='checkout'>Checkout</button>
       </form>
 
       {showSuccessMessage && (
@@ -93,3 +89,6 @@ const CheckoutForm = (props) => {
 };
 
 export default CheckoutForm;
+
+
+

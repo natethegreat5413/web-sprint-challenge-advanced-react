@@ -1,33 +1,37 @@
 import React from "react";
-import { render, fireEvent, getByText } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import CheckoutForm from "./CheckoutForm";
 
 // Write up the two tests here and make sure they are testing what the title shows
 
 test("form header renders", () => {
-    const {getByText} = render(<CheckoutForm />)
-        getByText(/Checkout Form/i)
+    render(<CheckoutForm />)
+    const header = screen.getByText(/checkout form/i)
+
+    expect(header).toBeInTheDocument()
 });
 
 test("form shows success message on submit with form details", () => {
-    const {getByLabelText, getByTestId} = render(<CheckoutForm />);
+    render(<CheckoutForm />)
 
-    const firstNameInput = getByLabelText(/first name/i)
-    const lastNameInput = getByLabelText(/last name/i)
-    const address = getByLabelText(/address/i)
-    const city = getByLabelText(/city/i)
-    const state = getByLabelText(/state/i)
-    const zip = getByLabelText(/zip/i)
+    const fnInput = screen.getByLabelText(/first name/i)
+    const lnInput = screen.getByLabelText(/last name/i)
+    const address = screen.getByLabelText(/address/i)
+    const city = screen.getByLabelText(/city/i)
+    const state = screen.getByLabelText(/state/i)
+    const zip = screen.getByLabelText(/zip/i)
 
-    fireEvent.change(firstNameInput, {target: {value: 'nate'}})
-    fireEvent.change(firstNameInput, {target: {value: 'cowley'}})
-    fireEvent.change(firstNameInput, {target: {value: '874 e 7493 n'}})
-    fireEvent.change(firstNameInput, {target: {value: 'Lehi'}})
-    fireEvent.change(firstNameInput, {target: {value: 'Utah'}})
-    fireEvent.change(firstNameInput, {target: {value: '84043'}})
+    fireEvent.change(fnInput, { target: { value: 'Nate'} })
+    fireEvent.change(lnInput, { target: { value: 'Cowley'} })
+    fireEvent.change(address, { target: { value: '963 E 5689 N'} })
+    fireEvent.change(city, { target: { value: 'Lehi'} })
+    fireEvent.change(state, { target: { value: 'Utah'} })
+    fireEvent.change(zip, { target: { value: '84043'} })
 
-    const submitButton = getByTestId(/checkout/i)
-    fireEvent.click(submitButton);
+    const checkout = screen.getByTestId(/checkout/i)
+    fireEvent.click(checkout)
 
-    const successMessage = getByTestId(/successMessage/i)
+    const successMessage = screen.getByTestId(/successMessage/i)
+    const success = screen.getByText(/You have ordered some plants! Woo-hoo!/i)
+    expect(success).toBeInTheDocument()
 });
