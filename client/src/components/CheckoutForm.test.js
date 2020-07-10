@@ -12,26 +12,31 @@ test("form header renders", () => {
 });
 
 test("form shows success message on submit with form details", () => {
-    render(<CheckoutForm />)
 
-    const fnInput = screen.getByLabelText(/first name/i)
-    const lnInput = screen.getByLabelText(/last name/i)
-    const address = screen.getByLabelText(/address/i)
-    const city = screen.getByLabelText(/city/i)
-    const state = screen.getByLabelText(/state/i)
-    const zip = screen.getByLabelText(/zip/i)
+    const container = render(<CheckoutForm />);
 
-    fireEvent.change(fnInput, { target: { value: 'Nate'} })
-    fireEvent.change(lnInput, { target: { value: 'Cowley'} })
-    fireEvent.change(address, { target: { value: '963 E 5689 N'} })
-    fireEvent.change(city, { target: { value: 'Lehi'} })
-    fireEvent.change(state, { target: { value: 'Utah'} })
-    fireEvent.change(zip, { target: { value: '84043'} })
+    const firstName = container.getByLabelText(/first name/i);
+    const lastName = container.getByLabelText(/last name/i);
+    const address = container.getByLabelText(/address/i);
+    const city = container.getByLabelText(/city/i);
+    const state = container.getByLabelText(/state/i);
+    const zip = container.getByLabelText(/zip/i);
 
-    const checkout = screen.getByTestId(/checkout/i)
-    fireEvent.click(checkout)
+    fireEvent.change(firstName, {target:{value:'Nate'}});
+    fireEvent.change(lastName, {target:{value:'Cowley'}});
+    fireEvent.change(address, {target:{value:'963 E 2180 N'}});
+    fireEvent.change(city, {target:{value:'Lehi'}});
+    fireEvent.change(state, {target:{value:'Ut'}});
+    fireEvent.change(zip, {target:{value:'84043'}});
 
-    const successMessage = screen.getByTestId(/successMessage/i)
-    const success = screen.getByText(/You have ordered some plants! Woo-hoo!/i)
-    expect(success).toBeInTheDocument()
+    const submitButton = container.getByText('Checkout');
+
+    fireEvent.click(submitButton);
+
+    const successMessage = container.getByTestId(/successMessage/i);
+
+    expect(successMessage).toBeInTheDocument();
+
+
 });
+
